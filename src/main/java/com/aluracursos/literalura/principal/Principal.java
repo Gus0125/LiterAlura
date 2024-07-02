@@ -1,11 +1,21 @@
 package com.aluracursos.literalura.principal;
 
+import com.aluracursos.literalura.model.DatosLibro;
+import com.aluracursos.literalura.service.ConsumoApi;
+import com.aluracursos.literalura.service.ConvierteDatos;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Principal {
 
 
     private Scanner teclado = new Scanner(System.in);
+    private ConsumoApi consumoApi = new ConsumoApi();
+    private final String URL_BASE = "https://gutendex.com/books/?search=";
+    private ConvierteDatos conversor = new ConvierteDatos();
+    private List<DatosLibro> datosLibro = new ArrayList<>();
 
     public void muestraMenu(){
         var opcion = -1;
@@ -20,6 +30,7 @@ public class Principal {
                     4.- Listar Autores vivos en un determinado año
                     5.- Listar libros por idioma
                     0.- Salir
+                    ****************************
                     """;
             System.out.println(menu);
             opcion = teclado.nextInt();
@@ -28,7 +39,7 @@ public class Principal {
             switch (opcion){
 
                 case 1:
-                    System.out.println("Caso 1");
+                    System.out.println(getDatosLibro());
                     break;
                 case 2:
                     System.out.println("Caso 2");
@@ -52,6 +63,14 @@ public class Principal {
 
         }
 
+    }
+
+    private DatosLibro  getDatosLibro() {
+        System.out.println("Escribe el nombre del libro que deseas buscar");
+        var titulo = teclado.nextLine().toLowerCase();
+        var json = consumoApi.obtenerDatos(URL_BASE + titulo.replace(" ", "%20") );
+        DatosLibro datos = conversor.obtenerDatos(json, DatosLibro.class);
+        return datos;
     }
 
 
