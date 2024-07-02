@@ -9,6 +9,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+
+//Clase para poder coonsumir nuestra consulta en la API
 public class ConsumoApi {
     public String obtenerDatos(String url) {
         HttpClient client = HttpClient.newHttpClient();

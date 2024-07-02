@@ -2,6 +2,8 @@ package com.aluracursos.literalura.principal;
 
 import java.util.Scanner;
 
+
+//Menu idiomas para seleccionar un libro de acuerdo a su idioma
 public class menuIdiomas {
 
     private static Scanner teclado = new Scanner(System.in);

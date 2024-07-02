@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+//Nuestra clase principal que muestra el menu y sus métodos para manejo de nuestros libros
 public class Principal {
 
 
@@ -39,7 +40,7 @@ public class Principal {
             switch (opcion){
 
                 case 1:
-                    System.out.println(getDatosLibro());
+                    System.out.println("Caso 1");
                     break;
                 case 2:
                     System.out.println("Caso 2");
