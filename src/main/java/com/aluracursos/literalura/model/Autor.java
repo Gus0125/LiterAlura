@@ -14,10 +14,10 @@ public class Autor {
     private String nombre;
     private Integer fechaDeNacimieto;
     private Integer fechaDeFallecimiento;
-    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Libro> libros;
 
-    public Autor(Autor autor) {}
+    public Autor() {}
 
     public Autor(DatosAutor datosAutor) {
         this.nombre = datosAutor.nombre();

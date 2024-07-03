@@ -2,6 +2,8 @@ package com.aluracursos.literalura.model;
 
 
 import jakarta.persistence.*;
+import org.hibernate.metamodel.model.domain.IdentifiableDomainType;
+
 //Clase Libro hecho tabla
 @Entity
 @Table(name = "libro")
@@ -10,7 +12,7 @@ public class Libro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    private Long apiId;
+    private Integer apiId;
     @Column(unique = true)
     private String titulo;
     @ManyToOne
@@ -24,12 +26,17 @@ public class Libro {
     public Libro(DatosLibro datosLibros) {
         this.apiId = datosLibros.id();
         this.titulo = datosLibros.titulo();
+        System.out.println((titulo));
         if (datosLibros.autor() != null && !datosLibros.autor().isEmpty()) {
-            this.autor = new Autor(datosLibros.autor().get(0)); // Toma el primer autor de la lista
+            this.autor = datosLibros.autor().get(0);
         } else {
             this.autor = null; // Caso en que no haya autor
         }
-        this.idioma = new Idioma(new DatosIdioma(datosLibros.idioma()));
+        if (datosLibros.idioma() != null && !datosLibros.idioma().isEmpty()) {
+            this.idioma = new Idioma(new DatosIdioma(datosLibros.idioma()));
+        } else {
+            this.idioma = null; // Caso en que no haya idioma
+        }
         this.descargas = datosLibros.descargas();
 
     }
@@ -42,11 +49,11 @@ public class Libro {
         this.id = id;
     }
 
-    public Long getApiId() {
+    public Integer getApiId() {
         return apiId;
     }
 
-    public void setApiId(Long apiId) {
+    public void setApiId(Integer apiId) {
         this.apiId = apiId;
     }
 
@@ -84,13 +91,12 @@ public class Libro {
 
     @Override
     public String toString() {
-        return
-                "********Libro********" +
-                "\nID: " + apiId +
-                "\nTítulo: " + titulo +
-                "\nAutor: " + autor.getNombre() +
-                "\nIdioma: " + idioma.getSiglas() +
-                "\nNúmero de descargas: " + descargas;
+        return"********Libro********" +
+                "\nID: " + (apiId != null ? apiId : "N/A") +
+                "\nTítulo: " + (titulo != null ? titulo : "N/A") +
+                "\nAutor: " + (autor != null ? autor.getNombre() : "N/A") +
+                "\nIdioma: " + (idioma != null ? idioma.getSiglas() : "N/A") +
+                "\nNúmero de descargas: " + (descargas != null ? descargas : "N/A");
 
     }
 }

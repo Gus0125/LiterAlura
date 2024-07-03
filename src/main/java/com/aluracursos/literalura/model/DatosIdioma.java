@@ -5,5 +5,5 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 public record DatosIdioma(
-        @JsonAlias("lenguajes") List<String> idiomas) {
+        @JsonAlias("languages") List<String> idiomas) {
 }

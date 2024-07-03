@@ -1,7 +1,5 @@
 package com.aluracursos.literalura.service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.net.URI;
@@ -28,9 +26,6 @@ public class ConsumoApi {
         }
 
         String json = response.body();
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Object jsonObject = gson.fromJson(json, Object.class);
-        String jsonFormateado = gson.toJson(jsonObject);
-        return jsonFormateado;
+        return json;
     }
 }

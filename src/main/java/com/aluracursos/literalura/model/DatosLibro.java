@@ -8,9 +8,9 @@ import java.util.List;
 //Record de nuestro libro que liga los datos de la API con nuestras variables
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record DatosLibro(
-        @JsonAlias("id") Long id,
+        @JsonAlias("id") Integer id,
         @JsonAlias("title") String titulo,
         @JsonAlias("name") List<Autor> autor,
-        @JsonAlias("lenguages") List<String> idioma,
+        @JsonAlias("languages") List<String> idioma,
         @JsonAlias("download_count") Long descargas) {
 }
