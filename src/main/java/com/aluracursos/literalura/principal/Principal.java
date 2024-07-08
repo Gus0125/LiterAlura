@@ -5,6 +5,7 @@ import com.aluracursos.literalura.model.DatosLibro;
 import com.aluracursos.literalura.model.Libro;
 import com.aluracursos.literalura.model.LibroJson;
 import com.aluracursos.literalura.repository.AutorRepository;
+import com.aluracursos.literalura.repository.IdiomaRepository;
 import com.aluracursos.literalura.repository.LibroRepository;
 import com.aluracursos.literalura.service.ConsumoApi;
 import com.aluracursos.literalura.service.ConvierteDatos;
@@ -23,10 +24,12 @@ public class Principal {
     private ConvierteDatos conversor = new ConvierteDatos();
     private final LibroRepository repositorio;
     private final AutorRepository autorRepository;
+    private final IdiomaRepository idiomaRepository;
 
-    public Principal(LibroRepository libroRepository, AutorRepository autorRepository) {
+    public Principal(LibroRepository libroRepository, AutorRepository autorRepository, IdiomaRepository idiomaRepository) {
         this.repositorio = libroRepository;
         this.autorRepository = autorRepository;
+        this.idiomaRepository = idiomaRepository;
     }
 
     public void muestraMenu(){
@@ -64,7 +67,7 @@ public class Principal {
                     listarAutoresPorAno();
                     break;
                 case 5:
-                    menuIdiomas menuI = new menuIdiomas();
+                    menuIdiomas menuI = new menuIdiomas(idiomaRepository, repositorio);
                     menuI.mostrarMenuIdiomas();
                     break;
                 case 0:

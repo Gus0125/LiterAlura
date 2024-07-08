@@ -13,4 +13,5 @@ public interface LibroRepository extends JpaRepository<Libro, Long> {
   Libro findByTituloContainsIgnoreCase(String nombre);
   @Query("SELECT l FROM Libro l WHERE LOWER(l.autor.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))")
   List<Libro> findByAutorNombre(@Param("nombre") String nombre);
+  List<Libro> findByIdiomaSiglas(String siglas);
 }
