@@ -4,16 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ConvierteDatos implements IConvierteDatos {
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public <T> T obtenerDatos(String json, Class<T> clase) {
         try {
-            System.out.println("JSON recibido: " + json); // Imprime el JSON recibido
-            T datos = objectMapper.readValue(json, clase);
-            System.out.println("Objeto mapeado: " + datos); // Imprime el objeto mapeado
-            return datos;
+            return objectMapper.readValue(json, clase);
         } catch (JsonProcessingException e) {
+            System.err.println("Error al procesar el JSON: " + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException(e);
         }

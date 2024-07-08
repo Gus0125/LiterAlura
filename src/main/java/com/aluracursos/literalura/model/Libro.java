@@ -1,10 +1,7 @@
 package com.aluracursos.literalura.model;
 
-
 import jakarta.persistence.*;
-import org.hibernate.metamodel.model.domain.IdentifiableDomainType;
 
-//Clase Libro hecho tabla
 @Entity
 @Table(name = "libro")
 public class Libro {
@@ -15,31 +12,35 @@ public class Libro {
     private Integer apiId;
     @Column(unique = true)
     private String titulo;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Autor autor;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Idioma idioma;
     private Long descargas;
 
-    public Libro(){}
+    public Libro() {}
 
-    public Libro(DatosLibro datosLibros) {
-        this.apiId = datosLibros.id();
-        this.titulo = datosLibros.titulo();
-        System.out.println((titulo));
-        if (datosLibros.autor() != null && !datosLibros.autor().isEmpty()) {
-            this.autor = datosLibros.autor().get(0);
-        } else {
-            this.autor = null; // Caso en que no haya autor
-        }
-        if (datosLibros.idioma() != null && !datosLibros.idioma().isEmpty()) {
-            this.idioma = new Idioma(new DatosIdioma(datosLibros.idioma()));
-        } else {
-            this.idioma = null; // Caso en que no haya idioma
-        }
-        this.descargas = datosLibros.descargas();
+    public Libro(LibroJson libroJson) {
+        this.apiId = libroJson.id();
+        this.titulo = libroJson.titulo();
 
+        if (libroJson.autor() != null && !libroJson.autor().isEmpty()) {
+            DatosAutor datosAutor = libroJson.autor().get(0);
+            this.autor = new Autor(datosAutor);
+        } else {
+            this.autor = null;
+        }
+
+        if (libroJson.idioma() != null && !libroJson.idioma().isEmpty()) {
+            this.idioma = new Idioma(new DatosIdioma(libroJson.idioma()));
+        } else {
+            this.idioma = null;
+        }
+
+        this.descargas = libroJson.descargas();
     }
+
+    // Getters y setters
 
     public Long getId() {
         return id;
@@ -91,12 +92,11 @@ public class Libro {
 
     @Override
     public String toString() {
-        return"********Libro********" +
+        return "********Libro********" +
                 "\nID: " + (apiId != null ? apiId : "N/A") +
                 "\nTítulo: " + (titulo != null ? titulo : "N/A") +
                 "\nAutor: " + (autor != null ? autor.getNombre() : "N/A") +
                 "\nIdioma: " + (idioma != null ? idioma.getSiglas() : "N/A") +
                 "\nNúmero de descargas: " + (descargas != null ? descargas : "N/A");
-
     }
 }

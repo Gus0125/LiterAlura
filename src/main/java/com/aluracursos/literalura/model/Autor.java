@@ -1,10 +1,9 @@
 package com.aluracursos.literalura.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
-//Tabla Autor
+// Tabla Autor
 @Entity
 @Table(name = "autor")
 public class Autor {
@@ -12,7 +11,9 @@ public class Autor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private Integer fechaDeNacimieto;
+    @Column(name = "fecha_de_nacimiento")
+    private Integer fechaDeNacimiento; // Nombre corregido
+    @Column(name = "fecha_de_fallecimiento")
     private Integer fechaDeFallecimiento;
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Libro> libros;
@@ -21,7 +22,7 @@ public class Autor {
 
     public Autor(DatosAutor datosAutor) {
         this.nombre = datosAutor.nombre();
-        this.fechaDeNacimieto = datosAutor.nacimiento();
+        this.fechaDeNacimiento = datosAutor.nacimiento();
         this.fechaDeFallecimiento = datosAutor.fallecimiento();
     }
 
@@ -41,12 +42,12 @@ public class Autor {
         this.nombre = nombre;
     }
 
-    public Integer getFechaDeNacimieto() {
-        return fechaDeNacimieto;
+    public Integer getFechaDeNacimiento() {
+        return fechaDeNacimiento;
     }
 
-    public void setFechaDeNacimieto(Integer fechaDeNacimieto) {
-        this.fechaDeNacimieto = fechaDeNacimieto;
+    public void setFechaDeNacimiento(Integer fechaDeNacimiento) {
+        this.fechaDeNacimiento = fechaDeNacimiento;
     }
 
     public Integer getFechaDeFallecimiento() {
@@ -62,7 +63,7 @@ public class Autor {
     }
 
     public void setLibros(List<Libro> libros) {
-        libros.forEach(l ->l.setAutor(this));
+        libros.forEach(l -> l.setAutor(this));
         this.libros = libros;
     }
 
@@ -70,8 +71,8 @@ public class Autor {
     public String toString() {
         return
                 "*****Autor*****" +
-                "\n Nombre: " + nombre +
-                "\n Fecha de Nacimiento: " + fechaDeNacimieto +
-                "\n Fecha de Fallecimiento: " + fechaDeFallecimiento;
+                        "\n Nombre: " + nombre +
+                        "\n Fecha de Nacimiento: " + fechaDeNacimiento +
+                        "\n Fecha de Fallecimiento: " + fechaDeFallecimiento;
     }
 }
